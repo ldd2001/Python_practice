@@ -1,34 +1,41 @@
+# 确定平均时间开始使用，将tecplot导出的二维文件导入，每隔100计算步输出数据
+# barracuda重新计算时不会删除未保存的数据，可能会出现折线图的短线，检查删除即可
+
 import os
 import pandas as pd
 
 # 设置文件夹路径
-folder_path = 'C:/Users/ldd20/Desktop/Time_averged'  # 替换为你的文件夹路径
+folder_path = 'C:/Users/ldd20/Desktop/SHIJUN'
+file_names = ['t', 'y6', 'y9', 'y12']  # 文件名列表
 
-# 获取文件名列表
-file_names = ['t', 'y5', 'y6', 'y9', 'y12','OUTLET']  # 文件名列表
+# 初始化一个空的DataFrame用于合并数据
+combined_data = pd.DataFrame()
 
-# 循环处理每个文件
 for file_name in file_names:
-    file_path = os.path.join(folder_path, file_name)  # 拼接文件路径
+    file_path = os.path.join(folder_path, file_name)
     
-    if os.path.exists(file_path):
-        # 读取文件内容，假设数据是以空格或制表符分隔的
-        try:
-            # 使用原始字符串表示正则表达式
-            data = pd.read_csv(file_path, sep=r'\s+', header=None)  # 使用正则匹配空格或制表符作为分隔符
-            
-            # 检查数据类型并转换为数字
-            data = data.apply(pd.to_numeric, errors='coerce')  # 转换文本为数字，无法转换的值会变为 NaN
-            
-            # 提取每隔100行的数据
-            sampled_data = data.iloc[::100]  # 每隔100行提取一次数据
-            
-            # 导出到 Excel
-            excel_file_path = os.path.join(folder_path, f"{file_name}_extracted.xlsx")
-            sampled_data.to_excel(excel_file_path, index=False, engine='openpyxl')
-            print(f"File '{file_name}' has been processed and exported to Excel.")
+    if not os.path.exists(file_path):
+        print(f"文件 '{file_name}' 未找到")
+        continue  # 跳过不存在的文件
+
+    try:
+        # 读取数据并转换为数值类型
+        data = pd.read_csv(file_path, sep=r'\s+', header=None)
+        data = data.apply(pd.to_numeric, errors='coerce')
         
-        except Exception as e:
-            print(f"Error processing file '{file_name}': {e}")
-    else:
-        print(f"File '{file_name}' not found.")
+        # 提取每隔100行数据并重置索引（确保行号对齐）
+        sampled_data = data.iloc[::100].reset_index(drop=True)
+        
+        # 将数据添加到合并DataFrame（每个文件作为一列）
+        # 假设所有文件数据列数一致，取第一列数据
+        combined_data[file_name] = sampled_data.iloc[:, 0]  # 只取第一列
+        
+        print(f"文件 '{file_name}' 已处理")
+        
+    except Exception as e:
+        print(f"处理文件 '{file_name}' 时出错: {e}")
+
+# 导出合并后的数据到Excel
+output_path = os.path.join(folder_path, "combined_results.xlsx")
+combined_data.to_excel(output_path, index=False, engine='openpyxl')
+print(f"\n所有文件已合并至: {output_path}")

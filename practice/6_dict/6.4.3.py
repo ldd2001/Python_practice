@@ -22,4 +22,4 @@ for name, languages in favorite_languages.items():            # key values 一�
 for name, languages in favorite_languages.items():
     print(f"{name.title()}'s favorite languages are:")
     for language in favorite_languages.values():   #问题出在这：。title用于字符串，favorite_langues.values他是一个列表，是不可以用.title的
-        print(f"{language.title()}")               #所以，for name languages里面，language就是列表，所以，12行，就是从列表里提取字符串
+        print(f"{language.title()}")               #所以，for name languages里面，language就是列表，所以，13行，就是从列表里提取字符串
