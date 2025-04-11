@@ -3,7 +3,7 @@ import pandas as pd
 from io import StringIO
 import openpyxl
 #RIGHT MODEL/
-folder_path = 'D:/NO_OBS_100W'  # 文件夹路径
+folder_path = 'E:/RIGHT MODEL/Injection_4000_v40'  # 文件夹路径
 output_excel_path = folder_path + '/output_data.xlsx'  # 输出 Excel 文件路径
 
 # 定义函数删除文件的前n行
@@ -122,7 +122,7 @@ def extract_and_export_to_excel(folder_path, output_excel_path):
             for row in range(1, ws.max_row + 1):
                 cell_value = str(ws[f"{column}{row}"].value)
                 max_length = max(max_length, len(cell_value))
-            adjusted_width = (max_length + 2)  # 增加一些空间
+            adjusted_width = (max_length + 5)  # 增加一些空间
             ws.column_dimensions[column].width = adjusted_width
 
         # 保存修改后的 Excel 文件
