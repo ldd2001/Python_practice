@@ -3,7 +3,7 @@ import pandas as pd
 from io import StringIO
 import openpyxl
 #RIGHT MODEL/
-folder_path = 'E:/RIGHT MODEL/Injection_4000_v40'  # 文件夹路径
+folder_path = 'E:/RIGHT MODEL/Injection_6000_v35'  # 文件夹路径
 output_excel_path = folder_path + '/output_data.xlsx'  # 输出 Excel 文件路径
 
 # 定义函数删除文件的前n行

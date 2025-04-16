@@ -4,7 +4,7 @@ from io import StringIO
 import openpyxl
 
 def process_fluid_data():
-    folder_path = 'E:/RIGHT MODEL/Injection_4000_v40'
+    folder_path = 'E:/RIGHT MODEL/Injection_6000_v35'
     output_excel = os.path.join(folder_path, 'output_data.xlsx')
 
     # 第一阶段：文件处理（保持不变）

@@ -1,0 +1,10 @@
+prompt = "\nTell me ....."
+prompt += "enter quit to end program: "
+
+message = ""                        #定义一个空变量，空变量用来存储用户级将输入的内容
+while message != "quit":            #当，输入的变量不是quit时，进入循环
+    message = input(prompt)         #input 把输入的内容，赋值给变量message
+    if message != "quit":           #如果输入的不是quit，才打印，输入对了就不需要打印
+        print(message)
+
+# 只有一个条件使得程序结束运行，那么如果有更多条件abc，他们都会使得程序结束
